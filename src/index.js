@@ -1,31 +1,28 @@
 import './css/styles.css';
+import template from './main.hbs'
+const debounce = require('lodash.debounce');
 
 const DEBOUNCE_DELAY = 300;
 const countryNameEL = document.querySelector('#search-box');
-const btn = document.querySelector('button');
-
-let getCountryName = '';
 
 
 function fetchCountries(name) {
-    // console.log(`Запрос на https://restcountries.com/v3.1/name/${name} отправлен, ожижаем результат.`)
-    fetch(`https://pokeapi.co/api/v2/pokemon/${name}`).then(data => {
-        return data.json()
-    }).then(response => {
-        console.log(response)
-    });
-    
+    let countriesObject = {};
+    fetch(`https://restcountries.com/v3.1/name/${name}`).then(response => {
+        return response.json();
+    }).then(result => {
+       console.log(result);
+        
+    });  
 }; 
 
 function onInputChange (event) {
-    getCountryName = event.target.value;
-    console.log(getCountryName);
+
+    const countryName = event.target.value;
+
+    console.log(countryName);
+
+    fetchCountries(countryName);
 };
 
-
-
-countryNameEL.addEventListener('input', onInputChange); 
-
-btn.addEventListener('click', () => {
-    fetchCountries(getCountryName);
-});
+countryNameEL.addEventListener('input', debounce(onInputChange, 2000)); 
