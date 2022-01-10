@@ -75,7 +75,8 @@ const fetchCountriesObjectFunction = {
     },
     
     onCatchError () {
-        // this.innerFunction('');
+        
+        fetchCountriesObjectFunction.innerFunction('');
         Notiflix.Notify.failure("Oops, there is no country with that name");
     },
 
